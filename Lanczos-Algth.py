@@ -134,7 +134,7 @@ for i in ns:
     v0[i] = complex(re_cns[kk],im_cns[kk])
     kk=kk+1
 
-
+v0,normaignorar = normaliz(v0)
 #print("v0 =", v0)
 array_vectors.append(v0)
 

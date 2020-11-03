@@ -5,7 +5,7 @@ Program lanczos
  complex(dp),dimension(:,:),allocatable     :: H,D,Z
  real(dp),dimension(:),allocatable          :: eigenval
  real(dp)                                   :: s,pi=2.d0*asin(1.d0),re,im
- complex(dp),dimension(:),allocatable       :: lambda, U_s
+ complex(dp),dimension(:),allocatable       :: nu, Psi_s
  real(dp),dimension(:),allocatable          :: realalpha,imagalpha,beta
  !Variables para dsyev
  integer                                    :: information, lworkk
@@ -16,11 +16,11 @@ Program lanczos
  !Dimension Espacio Krylov, N
  N=4
 
-! write(*,*) "Delta de Tiempo de la Evolución"
-! read(*,*) s
+!Delta de Tiempo de la Evolución
+ s = 0.8
 
  allocate(H(1:N,1:N),D(1:N,1:N),Z(1:N,1:N))
- allocate(eigenval(1:N),lambda(1:N),U_s(1:N))
+ allocate(eigenval(1:N),nu(1:N),Psi_s(1:N))
  allocate(realalpha(0:N-1),imagalpha(0:N-1),beta(1:N-1))
  !Para zheev
  lworkk = 2*N-1
@@ -35,9 +35,11 @@ Program lanczos
     read(10,*)realalpha(i),imagalpha(i)
     read(11,*)beta(i)
   end do
-!realalpha = 0.25_dp*realalpha
-!imagalpha = 0.25_dp*imagalpha
-!beta = 0.25_dp*beta
+  close(10)
+  close(11)
+realalpha = 0.25_dp*realalpha
+imagalpha = 0.25_dp*imagalpha
+beta = 0.25_dp*beta
 H = (0._dp,0._dp)
 
 H(1,1) = cmplx(realalpha(0),imagalpha(0))
@@ -95,24 +97,27 @@ H(2,1) = cmplx(beta(1),0._dp)
 
 
 
-! do i=1,N
-!    re= cos(2._dp*pi*eigenval(i)*s)
-!    im=-sin(2._dp*pi*eigenval(i)*s)
-!    lambda(i) = cmplx(re,im)
-!    write(*,*) re, im , lambda(i)
-! end do
+ do i=1,N
+    re= cos(eigenval(i)*s)
+    im= -sin(eigenval(i)*s)
+    nu(i) = cmplx(re,im)
+!    write(*,*) re, im , lambda(i) !Check
+ end do
 
-! U_s = 0._dp
-! do i=1,N
-!    do k=1,N
-!        U_s(i) = U_s(i) + Z(i,k)*lambda(k)*Z(1,k)
-!    end do
-! end do
+ Psi_s = 0._dp
+ do i=1,N
+    do k=1,N
+        Psi_s(i) = Psi_s(i) + Z(i,k)*nu(k)*conjg(Z(1,k))
+    end do
+ end do
 
 
  !Check Evolución
-! do i=1,N
-!    write(*,*) "Coeficiente",i,"= ", U_s(i)
-! end do
+ open(unit=12, file="CoefEvTemp.txt", status="unknown", action="write")
+ write(12,*) " recoef                         imcoef"
+ do i=1,N
+    write(12,*) REAL(Psi_s(i),8),"    ", DIMAG(Psi_s(i))
+ end do
 
+ close(12)
 End Program

@@ -5,3 +5,7 @@ coeficientesAlpha.txt
 coeficientesBeta.txt
 1-Lanczos-Diag.x
 Check_1-Lancozs-Diag_Neq4.nb
+Check-Lanczos-EvTemp.nb
+CoefEvTemp.txt
+initialstate.txt
+Lanczos-TempEvol.x
