@@ -110,6 +110,8 @@ def normaliz(dc):
 
 #Lanczos Algorithm
 
+n=4
+
 #Initial State read from file "initialstate.txt"
 #Coefficients and recursive Krylov's Vectors stored on lists
 df1 = pd.read_table("initialstate.txt",sep=r'\s{2,}')
@@ -164,7 +166,7 @@ array_vectors.append(v1)
 ###########################################
 ###########################################
 
-n=4
+
 for k in range(1,n-1):
     alpha = inner_prod(array_vectors[k] , hamiltonian(array_vectors[k]))
     alpha_array.append(alpha)
@@ -239,6 +241,31 @@ print(dfcoefbeta)
 filename2= open("coeficientesBeta.txt","w")
 np.savetxt(filename2,dfcoefbeta.values)
 filename2.close()
+
+
+
+# TENGO QUE GUARDAR TAMBIÉN EL VECTOR ARRAY DE ALGUNA FORMA PARA DEJAR LISTO PARA SIGUIENTE ITERACION!!!!!
+
+kk=0
+for i in array_vectors:
+    filename = "temporalfile_v"+str(kk)+".csv"
+    key = [ ] 
+    realpart = [ ]
+    imagpart = [ ]
+#    print(filename)
+    for j in i.keys():
+        key.append(j)
+        realpart.append(i[j].real)
+        imagpart.append(i[j].imag)
+#        print(j)
+#        print(i[j].real)
+#        print(i[j].imag)
+    kk=kk+1
+    dic = { "ky" : key , "rpt": realpart , "ipt": imagpart}
+    df = pd.DataFrame(dic)
+    df.to_csv(path_or_buf=filename)
+    print(df)
+
 
 
 # Check Funcionamiento Raising and Lowering Functions

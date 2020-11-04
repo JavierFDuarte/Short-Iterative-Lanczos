@@ -42,15 +42,15 @@ imagalpha = 0.25_dp*imagalpha
 beta = 0.25_dp*beta
 H = (0._dp,0._dp)
 
-H(1,1) = cmplx(realalpha(0),imagalpha(0))
-H(2,1) = cmplx(beta(1),0._dp)
+H(1,1) = complex(realalpha(0),imagalpha(0))
+H(2,1) = complex(beta(1),0._dp)
  do i = 2 ,N-1
-   H(i,i) = cmplx(realalpha(i-1),imagalpha(i-1))
-   H(i-1,i) = cmplx(beta(i-1),0._dp)
-   H(i+1,i) = cmplx(beta(i),0._dp)
+   H(i,i) = complex(realalpha(i-1),imagalpha(i-1))
+   H(i-1,i) = complex(beta(i-1),0._dp)
+   H(i+1,i) = complex(beta(i),0._dp)
  end do
- H(N,N) = cmplx(realalpha(N-1),imagalpha(N-1))
- H(N-1,N) = cmplx(beta(N-1),0._dp)
+ H(N,N) = complex(realalpha(N-1),imagalpha(N-1))
+ H(N-1,N) = complex(beta(N-1),0._dp)
    !CHECK Lectura Coeficinetes
   do i=0,N-1
       write(*,*) "alpha:",realalpha(i),imagalpha(i)
@@ -71,20 +71,28 @@ H(2,1) = cmplx(beta(1),0._dp)
 
 
  call zheev("V","U",N,Z,N,eigenval,workk,lworkk,rworkk,information)
+ 
+ if (int(workk(1)) /= lworkk .and. information /= 0)then
+  lworkk = int(workk(1))
+  deallocate(workk)
+  allocate(workk(1:lworkk))
+  call zheev("V","U",N,Z,N,eigenval,workk,lworkk,rworkk,information)
+ end if
 
  if (information==0) then
  	write(*,*)"------------------------------------------"
  	write(*,*) "Info = 0 - Funcionó bien"
- 	write(*,*) "lwork óptimo = ", workk(1)
-
+  write(*,*) "lwork óptimo = ", workk(1)
+  
  else
   write(*,*)"Info != 0 - La concha de la lora"
  end if
 
  	write(*,*)"------------------------------------------"
  	write(*,*) "Los autovalores son:"
- 	do i = 1, n
- 		write(*,*) "lambda",i,"=",eigenval(i)
+   
+  do i = 1, n
+ 	  write(*,*) "lambda",i,"=",eigenval(i)
  	end do
  	write(*,*)"------------------------------------------"
  	write(*,*) "La matriz de autovectores es:"
@@ -100,7 +108,7 @@ H(2,1) = cmplx(beta(1),0._dp)
  do i=1,N
     re= cos(eigenval(i)*s)
     im= -sin(eigenval(i)*s)
-    nu(i) = cmplx(re,im)
+    nu(i) = complex(re,im)
 !    write(*,*) re, im , lambda(i) !Check
  end do
 
