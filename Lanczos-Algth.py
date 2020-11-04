@@ -114,11 +114,13 @@ n=4
 
 #Initial State read from file "initialstate.txt"
 #Coefficients and recursive Krylov's Vectors stored on lists
-df1 = pd.read_table("initialstate.txt",sep=r'\s{2,}')
-print(df1   .shape)
-ns = list(df1["n"])
-re_cns=list(df1["r_cn"])
-im_cns=list(df1["i_cn"])
+#df1 = pd.read_table("initialstate.txt",sep=r'\s{2,}')
+ffname="initialstate.csv"
+df1 = pd.read_csv(filepath_or_buffer=ffname)
+print(df1.shape)
+ns = list(df1["instateky"])
+re_cns=list(df1["instatere"])
+im_cns=list(df1["instateim"])
 print("n=",ns)
 print("re_cn=",re_cns)
 print("im_cn=",im_cns)
