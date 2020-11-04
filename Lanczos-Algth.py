@@ -117,14 +117,14 @@ n=4
 #df1 = pd.read_table("initialstate.txt",sep=r'\s{2,}')
 ffname="initialstate.csv"
 df1 = pd.read_csv(filepath_or_buffer=ffname)
-print(df1.shape)
+#print(df1.shape)
 ns = list(df1["instateky"])
 re_cns=list(df1["instatere"])
 im_cns=list(df1["instateim"])
-print("n=",ns)
-print("re_cn=",re_cns)
-print("im_cn=",im_cns)
-print(df1)
+#print("n=",ns)
+#print("re_cn=",re_cns)
+#print("im_cn=",im_cns)
+#print(df1)
 
 
 alpha_array = [ ]
@@ -204,17 +204,17 @@ alpha_array.append(alpha)
 
 ###########################################
 ###########################################
-print("                              ")
-print("Alpha_Array")
-print(alpha_array)
+#print("                              ")
+#print("Alpha_Array")
+#print(alpha_array)
 
-print("                              ")
-print("Beta_Array")
-print(array_beta)
+#print("                              ")
+#print("Beta_Array")
+#print(array_beta)
 
-print("                              ")
-print("Vector_Array")
-print(array_vectors)
+#print("                              ")
+#print("Vector_Array")
+#print(array_vectors)
 ##########################################
 ##########################################
 
@@ -226,20 +226,20 @@ for k in alpha_array:
     realalpha.append(k.real)
     imagalpha.append(k.imag)
 
-print(realalpha)
-print(imagalpha)
+#print(realalpha)
+#print(imagalpha)
 
 #Save Coefficients on file
 coefalpha = {"realalpha":realalpha,"imagalpha":imagalpha}
 dfcoefalpha = pd.DataFrame(coefalpha)
-print(dfcoefalpha)
+#print(dfcoefalpha)
 filename1= open("coeficientesAlpha.txt","w")
 np.savetxt(filename1,dfcoefalpha.values)
 filename1.close()
 
 coefbeta = {"beta":array_beta}
 dfcoefbeta = pd.DataFrame(coefbeta)
-print(dfcoefbeta)
+#print(dfcoefbeta)
 filename2= open("coeficientesBeta.txt","w")
 np.savetxt(filename2,dfcoefbeta.values)
 filename2.close()
@@ -266,7 +266,7 @@ for i in array_vectors:
     dic = { "ky" : key , "rpt": realpart , "ipt": imagpart}
     df = pd.DataFrame(dic)
     df.to_csv(path_or_buf=filename)
-    print(df)
+#    print(df)
 
 
 

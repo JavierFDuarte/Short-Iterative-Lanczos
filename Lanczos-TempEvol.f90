@@ -17,7 +17,7 @@ Program lanczos
  N=4
 
 !Delta de Tiempo de la Evolución
- s = 0.8
+ s = 0.5
 
  allocate(H(1:N,1:N),D(1:N,1:N),Z(1:N,1:N))
  allocate(eigenval(1:N),nu(1:N),Psi_s(1:N))
@@ -53,16 +53,16 @@ H(2,1) = complex(beta(1),0._dp)
  H(N-1,N) = complex(beta(N-1),0._dp)
    !CHECK Lectura Coeficinetes
   do i=0,N-1
-      write(*,*) "alpha:",realalpha(i),imagalpha(i)
+!      write(*,*) "alpha:",realalpha(i),imagalpha(i)
   end do
   do i=1,N-1
-      write(*,*) "beta:",beta(i)
+!      write(*,*) "beta:",beta(i)
   end do
 
 
  !CHECK H
  do i=1,N
-    write(*,*) H(i,:)
+!    write(*,*) H(i,:)
  end do
 
 !Diagonalización
@@ -80,26 +80,26 @@ H(2,1) = complex(beta(1),0._dp)
  end if
 
  if (information==0) then
- 	write(*,*)"------------------------------------------"
- 	write(*,*) "Info = 0 - Funcionó bien"
-  write(*,*) "lwork óptimo = ", workk(1)
+! 	write(*,*)"------------------------------------------"
+! 	write(*,*) "Info = 0 - Funcionó bien"
+!  write(*,*) "lwork óptimo = ", workk(1)
   
  else
-  write(*,*)"Info != 0 - La concha de la lora"
+ write(*,*)"Info != 0 - La concha de la lora"
  end if
 
- 	write(*,*)"------------------------------------------"
- 	write(*,*) "Los autovalores son:"
+! 	write(*,*)"------------------------------------------"
+! 	write(*,*) "Los autovalores son:"
    
   do i = 1, n
- 	  write(*,*) "lambda",i,"=",eigenval(i)
+! 	  write(*,*) "lambda",i,"=",eigenval(i)
  	end do
- 	write(*,*)"------------------------------------------"
- 	write(*,*) "La matriz de autovectores es:"
+! 	write(*,*)"------------------------------------------"
+! 	write(*,*) "La matriz de autovectores es:"
  	do i = 1,n
- 		write(*,*) z(i,:)
+! 		write(*,*) z(i,:)
  	end do
- 	write(*,*)"------------------------------------------"
+! 	write(*,*)"------------------------------------------"
 
 
 

@@ -1,6 +1,6 @@
 import pandas as pd     #read and write data
 df1 = pd.read_table("CoefEvTemp.txt",sep=r'\s{2,}')
-print(df1)
+#print(df1)
 
 n = 4 
 
@@ -11,7 +11,7 @@ for i in range(0,n):
     ci.append(complex(re_coef[i],im_coef[i]))
 #print("re_cn=",re_coef)
 #print("im_cn=",im_coef)
-print("ci=",ci)
+#print("ci=",ci)
 #print(df1)
 
 
@@ -30,17 +30,17 @@ for i in range(0,n):
     for j in ky:
         v[j] = v.get(j,0.0)+complex(rpt[s],ipt[s])
         s=s+1
-    print(v)
+ #   print(v)
     for j in v.keys():
         v[j]=ci[i]*v[j]
-    print(v)
-    print("-------------------")
+ #   print(v)
+ #   print("-------------------")
     for k in v.keys():
         initialstate[k]= initialstate.get(k,0.0) + v[k]
     
     kk=kk+1
 
-print("initialstate=",initialstate)
+#print("initialstate=",initialstate)
     
 
 kyinitialstate = [ ]
@@ -53,9 +53,9 @@ for i in initialstate.keys():
 
 dic = { "instateky" : kyinitialstate , "instatere": reinitialstate, "instateim": iminitialstate}
 
-print(dic)
+#print(dic)
 
 data = pd.DataFrame(dic)
-print(data)
+#print(data)
 
 data.to_csv(path_or_buf="initialstate.csv")
